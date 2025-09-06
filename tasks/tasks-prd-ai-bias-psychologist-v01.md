@@ -1,0 +1,166 @@
+# Task List: AI Bias Psychologist v0.1
+
+Based on the PRD analysis, this is a greenfield Python-based project requiring a complete implementation of an AI bias detection system. The system needs to support 10 core cognitive biases, multiple LLM integrations, real-time dashboard, and comprehensive statistical analysis.
+
+## Relevant Files
+
+- `pyproject.toml` - Python project configuration with dependencies and build settings
+- `requirements.txt` - Python package dependencies for the project
+- `src/ai_bias_psych/__init__.py` - Main package initialization
+- `src/ai_bias_psych/main.py` - FastAPI application entry point
+- `src/ai_bias_psych/cli.py` - Typer CLI interface for command-line operations
+- `src/ai_bias_psych/models/` - Pydantic data models for API and data validation
+- `src/ai_bias_psych/models/probe.py` - Probe definition and response models
+- `src/ai_bias_psych/models/bias.py` - Bias scoring and analysis models
+- `src/ai_bias_psych/models/llm.py` - LLM provider and metadata models
+- `src/ai_bias_psych/probes/` - Bias probe implementations
+- `src/ai_bias_psych/probes/__init__.py` - Probe package initialization
+- `src/ai_bias_psych/probes/base.py` - Base probe class and interfaces
+- `src/ai_bias_psych/probes/prospect_theory.py` - Prospect theory/loss aversion probes
+- `src/ai_bias_psych/probes/anchoring.py` - Anchoring bias probes
+- `src/ai_bias_psych/probes/availability.py` - Availability heuristic probes
+- `src/ai_bias_psych/probes/framing.py` - Framing effect probes
+- `src/ai_bias_psych/probes/sunk_cost.py` - Sunk cost fallacy probes
+- `src/ai_bias_psych/probes/optimism.py` - Optimism bias probes
+- `src/ai_bias_psych/probes/confirmation.py` - Confirmation bias probes
+- `src/ai_bias_psych/probes/base_rate.py` - Base-rate neglect probes
+- `src/ai_bias_psych/probes/conjunction.py` - Conjunction fallacy probes
+- `src/ai_bias_psych/probes/overconfidence.py` - Overconfidence bias probes
+- `src/ai_bias_psych/llm/` - LLM integration layer
+- `src/ai_bias_psych/llm/__init__.py` - LLM package initialization
+- `src/ai_bias_psych/llm/base.py` - Base LLM client interface
+- `src/ai_bias_psych/llm/openai_client.py` - OpenAI API integration
+- `src/ai_bias_psych/llm/anthropic_client.py` - Anthropic API integration
+- `src/ai_bias_psych/llm/ollama_client.py` - Local Ollama model integration
+- `src/ai_bias_psych/analytics/` - Scoring and statistical analysis
+- `src/ai_bias_psych/analytics/__init__.py` - Analytics package initialization
+- `src/ai_bias_psych/analytics/scoring.py` - Bias scoring algorithms
+- `src/ai_bias_psych/analytics/statistics.py` - Statistical analysis functions
+- `src/ai_bias_psych/analytics/sentiment.py` - Sentiment analysis for free-text responses
+- `src/ai_bias_psych/storage/` - Data management and persistence
+- `src/ai_bias_psych/storage/__init__.py` - Storage package initialization
+- `src/ai_bias_psych/storage/database.py` - SQLite database operations
+- `src/ai_bias_psych/storage/jsonl_logger.py` - JSONL response logging
+- `src/ai_bias_psych/storage/export.py` - Data export functionality
+- `src/ai_bias_psych/api/` - FastAPI routes and endpoints
+- `src/ai_bias_psych/api/__init__.py` - API package initialization
+- `src/ai_bias_psych/api/probes.py` - Probe execution endpoints
+- `src/ai_bias_psych/api/dashboard.py` - Dashboard data endpoints
+- `src/ai_bias_psych/api/reports.py` - Report generation endpoints
+- `src/ai_bias_psych/web/` - Frontend dashboard
+- `src/ai_bias_psych/web/static/` - Static web assets
+- `src/ai_bias_psych/web/templates/` - HTML templates
+- `src/ai_bias_psych/web/static/css/` - CSS stylesheets
+- `src/ai_bias_psych/web/static/js/` - JavaScript for dashboard functionality
+- `config/` - Configuration files
+- `config/probes.yaml` - Probe definitions and variants
+- `config/models.yaml` - LLM model configurations
+- `tests/` - Test suite
+- `tests/__init__.py` - Test package initialization
+- `tests/test_probes.py` - Probe implementation tests
+- `tests/test_llm.py` - LLM integration tests
+- `tests/test_analytics.py` - Analytics and scoring tests
+- `tests/test_storage.py` - Data storage tests
+- `tests/test_api.py` - API endpoint tests
+- `tests/fixtures/` - Test data and fixtures
+- `data/` - Data storage directory
+- `data/responses/` - JSONL response logs
+- `data/database/` - SQLite database files
+- `data/exports/` - Generated reports and exports
+- `scripts/` - Utility scripts
+- `scripts/setup_db.py` - Database initialization script
+- `scripts/run_battery.py` - Full bias test battery runner
+- `scripts/export_data.py` - Data export utility
+- `README.md` - Project documentation
+- `Dockerfile` - Container configuration
+- `docker-compose.yml` - Multi-service container setup
+- `.env.example` - Environment variables template
+- `.gitignore` - Git ignore patterns
+
+### Notes
+
+- Unit tests should be placed alongside the code files they are testing (e.g., `MyComponent.py` and `test_MyComponent.py` in the same directory).
+- Use `pytest` to run tests. Running without a path executes all tests found by the pytest configuration.
+- The project follows Python packaging standards with `src/` layout for better dependency management.
+
+## Tasks
+
+- [x] 1.0 **Project Setup & Core Infrastructure**
+  - [x] 1.1 Create Python project structure with `src/` layout and proper package organization
+  - [x] 1.2 Set up `pyproject.toml` with FastAPI, Typer, Pydantic, Pandas, SciPy, and other core dependencies
+  - [x] 1.3 Create `requirements.txt` for development and production environments
+  - [x] 1.4 Initialize main package structure with `__init__.py` files and basic module organization
+  - [x] 1.5 Set up configuration system with YAML files for probes and model definitions
+  - [x] 1.6 Create data directory structure for responses, database, and exports
+  - [x] 1.7 Set up logging configuration with structured logging for probe execution
+  - [x] 1.8 Create environment configuration with `.env.example` and environment variable handling
+
+- [ ] 2.0 **Bias Probe Engine Implementation**
+  - [ ] 2.1 Implement base probe class with common interfaces for all bias types
+  - [ ] 2.2 Create prospect theory/loss aversion probes with gain/loss framing variants
+  - [ ] 2.3 Implement anchoring bias probes with high/low anchor variants across domains
+  - [ ] 2.4 Build availability heuristic probes with priming scenarios
+  - [ ] 2.5 Create framing effect probes with positive/negative framing variants
+  - [ ] 2.6 Implement sunk cost fallacy probes with multi-turn conversation scenarios
+  - [ ] 2.7 Build optimism bias probes with timeline and probability estimation variants
+  - [ ] 2.8 Create confirmation bias probes with mixed evidence presentation
+  - [ ] 2.9 Implement base-rate neglect probes with Bayesian reasoning scenarios
+  - [ ] 2.10 Build conjunction fallacy probes with "Linda problem" style variants
+  - [ ] 2.11 Create overconfidence bias probes with confidence interval estimation
+  - [ ] 2.12 Implement probe variant randomization and order effect prevention
+  - [ ] 2.13 Add support for both multiple-choice and free-text response formats
+
+- [ ] 3.0 **LLM Integration Layer**
+  - [ ] 3.1 Create base LLM client interface with common methods and error handling
+  - [ ] 3.2 Implement OpenAI API client with GPT-4 and GPT-3.5 support
+  - [ ] 3.3 Build Anthropic API client with Claude-3 integration
+  - [ ] 3.4 Create Ollama client for local model execution (Llama 3, Mistral)
+  - [ ] 3.5 Implement rate limiting and retry logic for all API clients
+  - [ ] 3.6 Add comprehensive model metadata capture (version, parameters, context window)
+  - [ ] 3.7 Create async/await patterns for concurrent probe execution
+  - [ ] 3.8 Implement response caching and deduplication mechanisms
+  - [ ] 3.9 Add configurable temperature and sampling parameters per probe
+
+- [ ] 4.0 **Scoring & Analytics Engine**
+  - [ ] 4.1 Implement normalized bias scoring algorithms (0-1 scale) for each bias type
+  - [ ] 4.2 Create effect size calculation with Cohen's d and statistical significance testing
+  - [ ] 4.3 Build calibration error measurement using 90% confidence intervals
+  - [ ] 4.4 Implement contradiction rate detection for equivalent probe variants
+  - [ ] 4.5 Create sentiment analysis pipeline for free-text response scoring
+  - [ ] 4.6 Build multiple-choice scoring with exact match and semantic similarity
+  - [ ] 4.7 Implement confidence interval calculation for probabilistic responses
+  - [ ] 4.8 Create drift detection algorithms for longitudinal bias tracking
+  - [ ] 4.9 Add cross-model comparison and benchmarking capabilities
+
+- [ ] 5.0 **Data Management & Storage**
+  - [ ] 5.1 Implement JSONL logging system for probe responses with full provenance
+  - [ ] 5.2 Create SQLite database schema for metadata and trend storage
+  - [ ] 5.3 Build database operations for storing and retrieving bias scores over time
+  - [ ] 5.4 Implement data export functionality (JSON, CSV, HTML formats)
+  - [ ] 5.5 Create data validation and integrity checking mechanisms
+  - [ ] 5.6 Build backup and recovery procedures for response data
+  - [ ] 5.7 Implement data anonymization and privacy protection features
+  - [ ] 5.8 Create database migration and versioning system
+
+- [ ] 6.0 **Real-time Dashboard & Reporting**
+  - [ ] 6.1 Create FastAPI web server with CORS and basic security
+  - [ ] 6.2 Implement dashboard API endpoints for current bias scores and trends
+  - [ ] 6.3 Build HTML templates with responsive design for desktop and tablet
+  - [ ] 6.4 Create sparkline visualizations for trend analysis over time
+  - [ ] 6.5 Implement cross-model comparison tables with color-coded severity indicators
+  - [ ] 6.6 Build real-time data updates using WebSocket or polling mechanisms
+  - [ ] 6.7 Create automated report generation with bias severity indicators
+  - [ ] 6.8 Implement export functionality prominently displayed in dashboard
+  - [ ] 6.9 Add basic educational explanations for each bias type
+
+- [ ] 7.0 **CLI Interface & Testing**
+  - [ ] 7.1 Create Typer CLI interface for command-line probe execution
+  - [ ] 7.2 Implement CLI commands for running individual probes and full test batteries
+  - [ ] 7.3 Build CLI options for model selection, temperature settings, and output formats
+  - [ ] 7.4 Create comprehensive test suite with pytest for all components
+  - [ ] 7.5 Implement unit tests for probe implementations and scoring algorithms
+  - [ ] 7.6 Create integration tests for LLM clients and API endpoints
+  - [ ] 7.7 Build end-to-end tests for complete bias detection workflows
+  - [ ] 7.8 Add performance tests for system performance requirements (<5 minutes per model)
+  - [ ] 7.9 Create test fixtures and mock data for consistent testing
+  - [ ] 7.10 Implement CI/CD pipeline with GitHub Actions for linting, type checks, and tests

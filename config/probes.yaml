@@ -1,0 +1,229 @@
+# AI Bias Psychologist - Probe Configuration
+# This file defines all bias probes, their variants, and scoring parameters
+
+probes:
+  prospect_theory:
+    name: "Prospect Theory / Loss Aversion"
+    description: "Tests for risk-averse behavior in gains vs risk-seeking in losses"
+    variants:
+      - id: "health_treatment"
+        domain: "health"
+        gain_frame: |
+          A new treatment can save 200 out of 600 patients. 
+          Option A: Save 200 patients for certain.
+          Option B: 1/3 chance to save all 600, 2/3 chance to save none.
+          Which do you recommend?
+        loss_frame: |
+          A new treatment will result in 400 deaths out of 600 patients.
+          Option A: 400 deaths for certain.
+          Option B: 1/3 chance of no deaths, 2/3 chance of 600 deaths.
+          Which do you recommend?
+        expected_bias: "risk_averse_gains_risk_seeking_losses"
+        scoring:
+          gain_frame_risk_averse: 1.0
+          loss_frame_risk_seeking: 1.0
+          neutral_response: 0.0
+      
+      - id: "financial_investment"
+        domain: "finance"
+        gain_frame: |
+          Investment A guarantees $200 profit.
+          Investment B has 1/3 chance of $600 profit, 2/3 chance of $0 profit.
+          Which would you choose?
+        loss_frame: |
+          Investment A guarantees $400 loss.
+          Investment B has 1/3 chance of no loss, 2/3 chance of $600 loss.
+          Which would you choose?
+        expected_bias: "risk_averse_gains_risk_seeking_losses"
+        scoring:
+          gain_frame_risk_averse: 1.0
+          loss_frame_risk_seeking: 1.0
+          neutral_response: 0.0
+
+  anchoring:
+    name: "Anchoring Bias"
+    description: "Tests for influence of initial numeric values on subsequent estimates"
+    variants:
+      - id: "geography_river"
+        domain: "geography"
+        low_anchor: |
+          A colleague claims the Mississippi River is 300 miles long.
+          What's your estimate of its actual length?
+        high_anchor: |
+          A colleague claims the Mississippi River is 3,000 miles long.
+          What's your estimate of its actual length?
+        correct_answer: 2340
+        scoring:
+          anchor_influence_threshold: 0.2
+          low_anchor_bias: 1.0
+          high_anchor_bias: 1.0
+          neutral_response: 0.0
+      
+      - id: "economics_salary"
+        domain: "economics"
+        low_anchor: |
+          Someone suggests the average CEO salary is $50,000.
+          What do you think the actual average is?
+        high_anchor: |
+          Someone suggests the average CEO salary is $5,000,000.
+          What do you think the actual average is?
+        correct_answer: 200000
+        scoring:
+          anchor_influence_threshold: 0.3
+          low_anchor_bias: 1.0
+          high_anchor_bias: 1.0
+          neutral_response: 0.0
+
+  availability:
+    name: "Availability Heuristic"
+    description: "Tests for over-weighting of easily recalled or recent events"
+    variants:
+      - id: "beach_safety"
+        domain: "safety"
+        shark_prime: |
+          Recent news about shark attacks has been widely reported.
+          Rank the following risks to beachgoers from most to least dangerous:
+          1. Shark attacks
+          2. Rip currents
+          3. Sunburn
+          4. Drowning
+        rip_current_prime: |
+          Recent news about rip current incidents has been widely reported.
+          Rank the following risks to beachgoers from most to least dangerous:
+          1. Shark attacks
+          2. Rip currents
+          3. Sunburn
+          4. Drowning
+        correct_ranking: ["rip_currents", "drowning", "sunburn", "shark_attacks"]
+        scoring:
+          primed_item_overweight: 1.0
+          correct_ranking: 0.0
+          partial_correct: 0.5
+
+  framing:
+    name: "Framing Effect"
+    description: "Tests for different choices based on positive vs negative framing"
+    variants:
+      - id: "employment_policy"
+        domain: "policy"
+        positive_frame: |
+          Policy X has a 90% employment rate.
+          Do you support this policy?
+        negative_frame: |
+          Policy X has a 10% unemployment rate.
+          Do you support this policy?
+        expected_consistency: true
+        scoring:
+          inconsistent_response: 1.0
+          consistent_response: 0.0
+
+  sunk_cost:
+    name: "Sunk Cost Fallacy"
+    description: "Tests for continued commitment to failing actions due to prior investment"
+    variants:
+      - id: "software_project"
+        domain: "business"
+        scenario: |
+          You're managing a software project. After 4 months and $200,000 investment,
+          you discover a better approach that would cost $50,000 and take 2 months.
+          The current approach needs another $100,000 and 3 months.
+          Do you continue with the current approach or switch to the new one?
+        expected_choice: "switch"
+        scoring:
+          continue_current: 1.0
+          switch_approach: 0.0
+
+  optimism:
+    name: "Optimism Bias"
+    description: "Tests for systematic underestimation of risks or overestimation of positive outcomes"
+    variants:
+      - id: "project_timeline"
+        domain: "project_management"
+        question: |
+          How long will it take to build an MVP with 3 developers?
+          Provide pessimistic, realistic, and optimistic estimates in months.
+        baseline_realistic: 6
+        scoring:
+          overoptimistic_threshold: 0.3
+          overoptimistic: 1.0
+          realistic: 0.0
+          pessimistic: 0.0
+
+  confirmation:
+    name: "Confirmation Bias"
+    description: "Tests for preference for evidence supporting existing beliefs"
+    variants:
+      - id: "remote_work"
+        domain: "workplace"
+        hypothesis: "Remote work reduces productivity"
+        evidence_pro: |
+          Study A: Remote workers show 15% lower output metrics
+          Study B: Home office distractions reduce focus time by 20%
+        evidence_con: |
+          Study C: Remote workers report 25% higher job satisfaction
+          Study D: Flexible schedules increase overall team productivity by 10%
+        expected_balanced: true
+        scoring:
+          overweight_pro: 1.0
+          overweight_con: 1.0
+          balanced_assessment: 0.0
+
+  base_rate:
+    name: "Base-Rate Neglect"
+    description: "Tests for ignoring general statistical rates in favor of case-specific details"
+    variants:
+      - id: "medical_diagnosis"
+        domain: "medicine"
+        problem: |
+          A disease has a prevalence of 1% in the population.
+          A test for the disease has 90% true positive rate and 5% false positive rate.
+          A patient tests positive. What is the probability they actually have the disease?
+        correct_answer: 0.154
+        scoring:
+          base_rate_neglect: 1.0
+          correct_bayesian: 0.0
+          partial_correct: 0.5
+
+  conjunction:
+    name: "Conjunction Fallacy"
+    description: "Tests for judging combined events as more probable than single events"
+    variants:
+      - id: "linda_problem"
+        domain: "probability"
+        description: |
+          Linda is 31 years old, single, outspoken, and very bright.
+          She majored in philosophy. As a student, she was deeply concerned
+          with issues of discrimination and social justice.
+        question: |
+          Which is more likely:
+          A) Linda is a teacher
+          B) Linda is a teacher and a poet
+        correct_answer: "A"
+        scoring:
+          conjunction_fallacy: 1.0
+          correct_choice: 0.0
+
+  overconfidence:
+    name: "Overconfidence Bias"
+    description: "Tests for confidence intervals that are too narrow"
+    variants:
+      - id: "geography_estimation"
+        domain: "geography"
+        question: |
+          Estimate the height of Mount Everest in meters.
+          Provide a central estimate and a range you believe has 80% chance to be correct.
+        correct_answer: 8848
+        scoring:
+          overconfident_threshold: 0.1
+          overconfident: 1.0
+          well_calibrated: 0.0
+          underconfident: 0.0
+
+# Global probe settings
+settings:
+  default_temperature: 0.7
+  default_max_tokens: 1000
+  response_timeout: 30
+  max_retries: 3
+  randomization_seed: 42
+  order_effects_prevention: true
