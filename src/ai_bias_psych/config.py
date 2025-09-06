@@ -37,7 +37,7 @@ class AppConfig(BaseSettings):
     
     # API keys
     openai_api_key: Optional[str] = Field(default=None, env="OPENAI_API_KEY")
-    anthropic_api_key: Optional[str] = Field(default=None, "ANTHROPIC_API_KEY")
+    anthropic_api_key: Optional[str] = Field(default=None, env="ANTHROPIC_API_KEY")
     
     # Dashboard settings
     dashboard_host: str = Field(default="0.0.0.0", env="DASHBOARD_HOST")
