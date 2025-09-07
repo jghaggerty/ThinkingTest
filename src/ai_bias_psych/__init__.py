@@ -9,14 +9,14 @@ __version__ = "0.1.0"
 __author__ = "AI Bias Psychologist Team"
 __email__ = "team@ai-bias-psych.org"
 
-# Core module imports
-from . import models
+# Core module imports - import in order to avoid circular dependencies
 from . import probes
 from . import llm
 from . import analytics
 from . import storage
 from . import api
 from . import web
+from . import models
 
 # Main application components
 from .main import create_app

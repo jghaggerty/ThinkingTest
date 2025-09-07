@@ -12,9 +12,8 @@ import uuid
 import asyncio
 import logging
 
-from ..models.probe import ProbeRequest, ProbeResponse
 from ..llm.base import BaseLLMClient
-from .types import ProbeType, ProbeVariant, ProbeExecutionResult, ResponseFormat
+from .types import ProbeType, ProbeVariant, ProbeExecutionResult, ResponseFormat, ProbeRequest
 from .randomization import ProbeRandomizer, RandomizationConfig, SessionContext
 from .response_formats import ResponseFormatProcessor, ResponseFormatConfig, ResponseParseResult
 

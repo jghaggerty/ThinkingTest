@@ -15,7 +15,7 @@ from .base import BaseProbe
 from .types import ProbeType, ProbeExecutionResult
 from .randomization import ProbeRandomizer, RandomizationConfig, SessionContext
 from ..llm.base import BaseLLMClient
-from ..models.probe import ProbeRequest
+from .types import ProbeRequest
 
 
 class TestBattery:

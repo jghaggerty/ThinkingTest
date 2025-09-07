@@ -12,7 +12,7 @@ import math
 from typing import Dict, Any, List, Optional, Tuple
 from .base import BaseProbe
 from .types import ProbeType, ResponseFormat, ProbeVariant
-from ..models.probe import ProbeRequest
+from .types import ProbeRequest
 
 
 class BaseRateProbe(BaseProbe):

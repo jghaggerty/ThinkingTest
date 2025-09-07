@@ -10,7 +10,7 @@ from src.ai_bias_psych.probes.base import (
     BaseProbe, ProbeType, ResponseFormat, ProbeVariant, ProbeExecutionResult
 )
 from src.ai_bias_psych.llm.base import BaseLLMClient, LLMResponse, LLMError
-from src.ai_bias_psych.models.probe import ProbeRequest
+from src.ai_bias_psych.probes.types import ProbeRequest
 
 
 class MockLLMClient(BaseLLMClient):
