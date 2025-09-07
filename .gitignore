@@ -2,6 +2,8 @@
 
 # Python
 __pycache__/
+*.pyc
+*.pyo
 *.py[cod]
 *$py.class
 *.so
@@ -208,3 +210,27 @@ benchmark_results/
 # Documentation builds
 docs/build/
 docs/_build/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+.terraform.lock.hcl
+
+# Infrastructure
+infra/.terraform/
+infra/*.tfstate
+infra/*.tfstate.*
+infra/*.tfvars
+infra/*.tfvars.json
+infra/terraform.tfstate.d/
+infra/crash.log
+infra/crash.*.log
+infra/*.tfplan
+infra/*.tfplan.*
+
+# AWS
+.aws/
+aws-credentials
