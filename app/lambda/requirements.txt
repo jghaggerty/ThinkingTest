@@ -1,0 +1,6 @@
+# Lambda function dependencies
+# Add any additional packages needed for the Lambda function here
+
+# Core dependencies (if needed)
+# boto3>=1.26.0
+# requests>=2.28.0
