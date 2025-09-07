@@ -38,9 +38,5 @@ module "network" {
 module "app_lambda" {
   source = "../../modules/app-lambda"
   
-  project_name = local.project_name
-  environment  = local.environment
-  lambda_source_path = var.lambda_source_path
-  lambda_handler     = var.lambda_handler
-  lambda_runtime     = var.lambda_runtime
+  environment = local.environment
 }
