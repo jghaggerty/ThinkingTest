@@ -29,29 +29,29 @@ from .format_examples import (
 # Import all bias probe implementations
 # TODO: Uncomment these imports as probe implementations are completed
 from .prospect_theory import ProspectTheoryProbe
-# from .anchoring import AnchoringProbe
-# from .availability import AvailabilityProbe
-# from .framing import FramingProbe
-# from .sunk_cost import SunkCostProbe
-# from .optimism import OptimismProbe
-# from .confirmation import ConfirmationProbe
-# from .base_rate import BaseRateProbe
-# from .conjunction import ConjunctionProbe
-# from .overconfidence import OverconfidenceProbe
+from .anchoring import AnchoringProbe
+from .availability import AvailabilityProbe
+from .framing import FramingProbe
+from .sunk_cost import SunkCostProbe
+from .optimism import OptimismProbe
+from .confirmation import ConfirmationProbe
+from .base_rate import BaseRateProbe
+from .conjunction import ConjunctionProbe
+from .overconfidence import OverconfidenceProbe
 
 # Registry of all available probes
 # TODO: Update this registry as probe implementations are completed
 PROBE_REGISTRY = {
     "prospect_theory": ProspectTheoryProbe,
-    # "anchoring": AnchoringProbe,
-    # "availability": AvailabilityProbe,
-    # "framing": FramingProbe,
-    # "sunk_cost": SunkCostProbe,
-    # "optimism": OptimismProbe,
-    # "confirmation": ConfirmationProbe,
-    # "base_rate": BaseRateProbe,
-    # "conjunction": ConjunctionProbe,
-    # "overconfidence": OverconfidenceProbe,
+    "anchoring": AnchoringProbe,
+    "availability": AvailabilityProbe,
+    "framing": FramingProbe,
+    "sunk_cost": SunkCostProbe,
+    "optimism": OptimismProbe,
+    "confirmation": ConfirmationProbe,
+    "base_rate": BaseRateProbe,
+    "conjunction": ConjunctionProbe,
+    "overconfidence": OverconfidenceProbe,
 }
 
 __all__ = [
@@ -79,13 +79,13 @@ __all__ = [
     "PROBE_REGISTRY",
     # TODO: Add probe implementations to __all__ as they are completed
     "ProspectTheoryProbe",
-    # "AnchoringProbe",
-    # "AvailabilityProbe",
-    # "FramingProbe",
-    # "SunkCostProbe",
-    # "OptimismProbe",
-    # "ConfirmationProbe",
-    # "BaseRateProbe",
-    # "ConjunctionProbe",
-    # "OverconfidenceProbe",
+    "AnchoringProbe",
+    "AvailabilityProbe",
+    "FramingProbe",
+    "SunkCostProbe",
+    "OptimismProbe",
+    "ConfirmationProbe",
+    "BaseRateProbe",
+    "ConjunctionProbe",
+    "OverconfidenceProbe",
 ]

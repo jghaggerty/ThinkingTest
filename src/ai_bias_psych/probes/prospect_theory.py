@@ -39,7 +39,7 @@ class ProspectTheoryProbe(BaseProbe):
         Args:
             config: Configuration dictionary containing variant definitions
         """
-        prospect_config = config.get("prospect_theory", {})
+        prospect_config = config.get("probes", {}).get("prospect_theory", {})
         variants_config = prospect_config.get("variants", [])
         
         for variant_config in variants_config:

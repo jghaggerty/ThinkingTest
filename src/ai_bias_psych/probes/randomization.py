@@ -245,8 +245,14 @@ class ProbeRandomizer:
         session = self.get_session(session_id) if session_id else None
         
         # Get all available probe types
-        probe_types = [ProbeType(pt) for pt in probe_registry.keys() 
-                      if pt in [p.value for p in ProbeType]]
+        probe_types = []
+        for pt in probe_registry.keys():
+            try:
+                probe_type = ProbeType(pt)
+                probe_types.append(probe_type)
+            except ValueError:
+                # Skip invalid probe types
+                continue
         
         # Select probe order
         ordered_probes = self.select_probe_order(probe_types, session_id)
@@ -259,6 +265,18 @@ class ProbeRandomizer:
             
             # Create probe instance and get variants
             probe_instance = probe_class()
+            # Load variants if they haven't been loaded yet
+            if not probe_instance.variants:
+                # Try to load variants from config if available
+                try:
+                    import yaml
+                    with open('config/probes.yaml', 'r') as f:
+                        config_data = yaml.safe_load(f)
+                    probe_instance.load_variants(config_data)
+                except Exception as e:
+                    self.logger.warning(f"Could not load variants for {probe_type.value}: {e}")
+                    continue
+            
             available_variants = list(probe_instance.variants.values())
             
             if not available_variants:
@@ -339,6 +357,9 @@ class ProbeRandomizer:
             if not domain_variants:
                 # Fall back to all variants in domain if all have been used
                 domain_variants = domain_groups[selected_domain]
+                # If still empty, fall back to all available variants
+                if not domain_variants:
+                    domain_variants = variants
         
         return random.choice(domain_variants)
     
@@ -428,6 +449,9 @@ class ProbeRandomizer:
             available_in_block = [v for v in selected_block if v.id not in session.used_variants]
             if available_in_block:
                 selected_block = available_in_block
+            elif not available_in_block and selected_block:
+                # If all variants in block have been used, keep the original block
+                pass
         
         return random.choice(selected_block)
     

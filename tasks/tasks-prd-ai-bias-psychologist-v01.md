@@ -124,7 +124,7 @@ Based on the PRD analysis, this is a greenfield Python-based project requiring a
   - [x] 1.7 Set up logging configuration with structured logging for probe execution
   - [x] 1.8 Create environment configuration with `.env.example` and environment variable handling
 
-- [x] 2.0 **Bias Probe Engine Implementation**
+- [ ] 2.0 **Bias Probe Engine Implementation**
   - [x] 2.1 Implement base probe class with common interfaces for all bias types
   - [x] 2.2 Create prospect theory/loss aversion probes with gain/loss framing variants
   - [x] 2.3 Implement anchoring bias probes with high/low anchor variants across domains
