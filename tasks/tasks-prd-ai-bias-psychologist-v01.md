@@ -15,23 +15,28 @@ Based on the PRD analysis, this is a greenfield Python-based project requiring a
 - `src/ai_bias_psych/models/llm.py` - LLM provider and metadata models
 - `src/ai_bias_psych/probes/` - Bias probe implementations
 - `src/ai_bias_psych/probes/__init__.py` - Probe package initialization
-- `src/ai_bias_psych/probes/base.py` - Base probe class and interfaces
-- `src/ai_bias_psych/probes/prospect_theory.py` - Prospect theory/loss aversion probes
-- `src/ai_bias_psych/probes/anchoring.py` - Anchoring bias probes
-- `src/ai_bias_psych/probes/availability.py` - Availability heuristic probes
-- `src/ai_bias_psych/probes/framing.py` - Framing effect probes
-- `src/ai_bias_psych/probes/sunk_cost.py` - Sunk cost fallacy probes
-- `src/ai_bias_psych/probes/optimism.py` - Optimism bias probes
-- `src/ai_bias_psych/probes/confirmation.py` - Confirmation bias probes
-- `src/ai_bias_psych/probes/base_rate.py` - Base-rate neglect probes
-- `src/ai_bias_psych/probes/conjunction.py` - Conjunction fallacy probes
-- `src/ai_bias_psych/probes/overconfidence.py` - Overconfidence bias probes
+- `src/ai_bias_psych/probes/base.py` - Base probe class and interfaces with common patterns
+- `src/ai_bias_psych/probes/prospect_theory.py` - Prospect theory/loss aversion probes with gain/loss framing
+- `src/ai_bias_psych/probes/anchoring.py` - Anchoring bias probes with high/low anchor variants
+- `src/ai_bias_psych/probes/availability.py` - Availability heuristic probes with priming scenarios
+- `src/ai_bias_psych/probes/framing.py` - Framing effect probes with positive/negative framing variants
+- `src/ai_bias_psych/probes/sunk_cost.py` - Sunk cost fallacy probes with multi-turn conversation scenarios
+- `src/ai_bias_psych/probes/optimism.py` - Optimism bias probes with timeline and probability estimation variants
+- `src/ai_bias_psych/probes/confirmation.py` - Confirmation bias probes with mixed evidence presentation
+- `src/ai_bias_psych/probes/base_rate.py` - Base-rate neglect probes with Bayesian reasoning scenarios
+- `src/ai_bias_psych/probes/conjunction.py` - Conjunction fallacy probes with "Linda problem" style variants
+- `src/ai_bias_psych/probes/overconfidence.py` - Overconfidence bias probes with confidence interval estimation
+- `src/ai_bias_psych/probes/randomization.py` - Probe randomization and order effect prevention system
+- `src/ai_bias_psych/probes/battery_manager.py` - Test battery manager for comprehensive bias testing
+- `src/ai_bias_psych/probes/types.py` - Common types and enums for bias probes
+- `src/ai_bias_psych/probes/response_formats.py` - Enhanced response format processing and validation
+- `src/ai_bias_psych/probes/format_examples.py` - Example probe variants demonstrating response formats
 - `src/ai_bias_psych/llm/` - LLM integration layer
 - `src/ai_bias_psych/llm/__init__.py` - LLM package initialization
-- `src/ai_bias_psych/llm/base.py` - Base LLM client interface
-- `src/ai_bias_psych/llm/openai_client.py` - OpenAI API integration
-- `src/ai_bias_psych/llm/anthropic_client.py` - Anthropic API integration
-- `src/ai_bias_psych/llm/ollama_client.py` - Local Ollama model integration
+- `src/ai_bias_psych/llm/base.py` - Base LLM client interface with common methods
+- `src/ai_bias_psych/llm/openai_client.py` - OpenAI API integration (placeholder)
+- `src/ai_bias_psych/llm/anthropic_client.py` - Anthropic API integration (placeholder)
+- `src/ai_bias_psych/llm/ollama_client.py` - Local Ollama model integration (placeholder)
 - `src/ai_bias_psych/analytics/` - Scoring and statistical analysis
 - `src/ai_bias_psych/analytics/__init__.py` - Analytics package initialization
 - `src/ai_bias_psych/analytics/scoring.py` - Bias scoring algorithms
@@ -58,6 +63,18 @@ Based on the PRD analysis, this is a greenfield Python-based project requiring a
 - `tests/` - Test suite
 - `tests/__init__.py` - Test package initialization
 - `tests/test_probes.py` - Probe implementation tests
+- `tests/test_prospect_theory.py` - Prospect theory probe tests
+- `tests/test_anchoring.py` - Anchoring bias probe tests
+- `tests/test_availability.py` - Availability heuristic probe tests
+- `tests/test_framing.py` - Framing effect probe tests
+- `tests/test_sunk_cost.py` - Sunk cost fallacy probe tests
+- `tests/test_optimism.py` - Optimism bias probe tests
+- `tests/test_confirmation.py` - Confirmation bias probe tests
+- `tests/test_base_rate.py` - Base-rate neglect probe tests
+- `tests/test_conjunction.py` - Conjunction fallacy probe tests
+- `tests/test_overconfidence.py` - Overconfidence bias probe tests
+- `tests/test_randomization.py` - Probe randomization and order effect prevention tests
+- `tests/test_response_formats.py` - Enhanced response format handling tests
 - `tests/test_llm.py` - LLM integration tests
 - `tests/test_analytics.py` - Analytics and scoring tests
 - `tests/test_storage.py` - Data storage tests
@@ -69,6 +86,18 @@ Based on the PRD analysis, this is a greenfield Python-based project requiring a
 - `data/exports/` - Generated reports and exports
 - `scripts/` - Utility scripts
 - `scripts/setup_db.py` - Database initialization script
+- `scripts/demo_prospect_theory.py` - Prospect theory probe demonstration script
+- `scripts/demo_anchoring.py` - Anchoring bias probe demonstration script
+- `scripts/demo_availability.py` - Availability heuristic probe demonstration script
+- `scripts/demo_framing.py` - Framing effect probe demonstration script
+- `scripts/demo_sunk_cost.py` - Sunk cost fallacy probe demonstration script
+- `scripts/demo_optimism.py` - Optimism bias probe demonstration script
+- `scripts/demo_confirmation.py` - Confirmation bias probe demonstration script
+- `scripts/demo_base_rate.py` - Base-rate neglect probe demonstration script
+- `scripts/demo_conjunction.py` - Conjunction fallacy probe demonstration script
+- `scripts/demo_overconfidence.py` - Overconfidence bias probe demonstration script
+- `scripts/demo_randomization.py` - Probe randomization and order effect prevention demonstration script
+- `scripts/demo_response_formats.py` - Enhanced response format handling demonstration script
 - `scripts/run_battery.py` - Full bias test battery runner
 - `scripts/export_data.py` - Data export utility
 - `README.md` - Project documentation
@@ -95,20 +124,20 @@ Based on the PRD analysis, this is a greenfield Python-based project requiring a
   - [x] 1.7 Set up logging configuration with structured logging for probe execution
   - [x] 1.8 Create environment configuration with `.env.example` and environment variable handling
 
-- [ ] 2.0 **Bias Probe Engine Implementation**
-  - [ ] 2.1 Implement base probe class with common interfaces for all bias types
-  - [ ] 2.2 Create prospect theory/loss aversion probes with gain/loss framing variants
-  - [ ] 2.3 Implement anchoring bias probes with high/low anchor variants across domains
-  - [ ] 2.4 Build availability heuristic probes with priming scenarios
-  - [ ] 2.5 Create framing effect probes with positive/negative framing variants
-  - [ ] 2.6 Implement sunk cost fallacy probes with multi-turn conversation scenarios
-  - [ ] 2.7 Build optimism bias probes with timeline and probability estimation variants
-  - [ ] 2.8 Create confirmation bias probes with mixed evidence presentation
-  - [ ] 2.9 Implement base-rate neglect probes with Bayesian reasoning scenarios
-  - [ ] 2.10 Build conjunction fallacy probes with "Linda problem" style variants
-  - [ ] 2.11 Create overconfidence bias probes with confidence interval estimation
-  - [ ] 2.12 Implement probe variant randomization and order effect prevention
-  - [ ] 2.13 Add support for both multiple-choice and free-text response formats
+- [x] 2.0 **Bias Probe Engine Implementation**
+  - [x] 2.1 Implement base probe class with common interfaces for all bias types
+  - [x] 2.2 Create prospect theory/loss aversion probes with gain/loss framing variants
+  - [x] 2.3 Implement anchoring bias probes with high/low anchor variants across domains
+  - [x] 2.4 Build availability heuristic probes with priming scenarios
+  - [x] 2.5 Create framing effect probes with positive/negative framing variants
+  - [x] 2.6 Implement sunk cost fallacy probes with multi-turn conversation scenarios
+  - [x] 2.7 Build optimism bias probes with timeline and probability estimation variants
+  - [x] 2.8 Create confirmation bias probes with mixed evidence presentation
+  - [x] 2.9 Implement base-rate neglect probes with Bayesian reasoning scenarios
+  - [x] 2.10 Build conjunction fallacy probes with "Linda problem" style variants
+  - [x] 2.11 Create overconfidence bias probes with confidence interval estimation
+  - [x] 2.12 Implement probe variant randomization and order effect prevention
+  - [x] 2.13 Add support for both multiple-choice and free-text response formats
 
 - [ ] 3.0 **LLM Integration Layer**
   - [ ] 3.1 Create base LLM client interface with common methods and error handling
