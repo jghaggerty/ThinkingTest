@@ -16,7 +16,6 @@ from . import analytics
 from . import storage
 from . import api
 from . import web
-from . import models
 
 # Main application components
 from .main import create_app
@@ -26,7 +25,6 @@ __all__ = [
     "__version__",
     "__author__",
     "__email__",
-    "models",
     "probes", 
     "llm",
     "analytics",
