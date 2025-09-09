@@ -1,8 +1,8 @@
-name: Deploy
+name: Deploy DEV
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main ]  # must match the trust policy 'sub'
 
 permissions:
   contents: read
@@ -14,9 +14,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: hashicorp/setup-terraform@v3
-      - uses: aws-actions/configure-aws-credentials@v5
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v5
         with:
-          role-to-assume: arn:aws:iam::151973317693:role/gha-deploy-dev
+          role-to-assume: arn:aws:iam::398128643426:role/gha-deploy-dev
           aws-region: us-east-2
           audience: sts.amazonaws.com
       - name: Terraform Init/Apply (DEV)
