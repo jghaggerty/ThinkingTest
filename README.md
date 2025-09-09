@@ -54,6 +54,8 @@ src/ai_bias_psych/
 - OpenAI API key (optional)
 - Anthropic API key (optional)
 - Ollama (for local models)
+- AWS CLI v2 (for infrastructure deployment)
+- Terraform (for infrastructure management)
 
 ### Installation
 ```bash
@@ -82,6 +84,71 @@ python -m ai_bias_psych.cli run-probe --bias anchoring --model claude-3
 
 # Start dashboard
 python -m ai_bias_psych.main
+```
+
+## Local Authentication (AWS SSO)
+
+This project uses AWS SSO (IAM Identity Center) for secure authentication without static access keys.
+
+### Prerequisites
+- AWS CLI v2 installed
+- Access to your organization's AWS SSO portal
+
+### Setup AWS SSO Profile
+
+1. **Configure SSO profile** (run once):
+   ```bash
+   aws configure sso
+   ```
+   
+   When prompted, provide:
+   - SSO start URL: `https://your-org.awsapps.com/start`
+   - SSO region: `us-east-2`
+   - Default region: `us-east-2`
+   - Profile name: `dev-sso` (or your preferred name)
+
+2. **Login to SSO** (required each session):
+   ```bash
+   aws sso login --profile dev-sso
+   ```
+
+3. **Set environment variables** before running Terraform:
+
+   **Windows PowerShell:**
+   ```powershell
+   $env:AWS_PROFILE = "dev-sso"
+   $env:AWS_DEFAULT_REGION = "us-east-2"
+   ```
+
+   **macOS/Linux:**
+   ```bash
+   export AWS_PROFILE=dev-sso
+   export AWS_DEFAULT_REGION=us-east-2
+   ```
+
+### Convenience Scripts
+
+Use the provided helper scripts for easier authentication:
+
+**Windows PowerShell:**
+```powershell
+.\scripts\sso-login.ps1 -Profile "dev-sso" -Region "us-east-2"
+```
+
+**macOS/Linux:**
+```bash
+./scripts/sso-login.sh dev-sso us-east-2
+```
+
+### Infrastructure Deployment
+
+After authentication, deploy infrastructure:
+
+```bash
+cd infra/envs/dev
+terraform init
+terraform plan
+terraform apply
 ```
 
 ## Documentation

@@ -7,7 +7,6 @@ terraform {
     bucket         = "thinkingtest-tfstate"  # or your unique bucket
     key            = "dev/infra.tfstate"
     region         = "us-east-2"
-    dynamodb_table = "terraform-locks"
     encrypt        = true
   }
 }
@@ -27,16 +26,7 @@ locals {
 module "network" {
   source = "../../modules/network"
   
-  project_name = local.project_name
-  environment  = local.environment
-  vpc_cidr     = var.vpc_cidr
-  public_subnet_cidr = var.public_subnet_cidr
-  availability_zone   = var.availability_zone
+  environment = local.environment
+  vpc_cidr    = var.vpc_cidr
 }
 
-# App Lambda module
-module "app_lambda" {
-  source = "../../modules/app-lambda"
-  
-  environment = local.environment
-}
