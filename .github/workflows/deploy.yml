@@ -10,9 +10,7 @@ permissions:
 
 jobs:
   deploy-dev:
-    name: Deploy DEV
     runs-on: ubuntu-latest
-    environment: dev
     steps:
       - uses: actions/checkout@v4
       - uses: hashicorp/setup-terraform@v3
@@ -20,62 +18,9 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::151973317693:role/gha-deploy-dev
           aws-region: us-east-2
+          audience: sts.amazonaws.com
       - name: Terraform Init/Apply (DEV)
         working-directory: infra/envs/dev
-        run: |
-          terraform init
-          terraform apply -auto-approve
-
-  deploy-test:
-    name: Deploy TEST
-    needs: deploy-dev
-    runs-on: ubuntu-latest
-    environment: test
-    steps:
-      - uses: actions/checkout@v4
-      - uses: hashicorp/setup-terraform@v3
-      - uses: aws-actions/configure-aws-credentials@v5
-        with:
-          role-to-assume: arn:aws:iam::151973317693:role/gha-deploy-test
-          aws-region: us-east-2
-      - name: Terraform Init/Apply (TEST)
-        working-directory: infra/envs/test
-        run: |
-          terraform init
-          terraform apply -auto-approve
-
-  deploy-stage:
-    name: Deploy STAGE
-    needs: deploy-test
-    runs-on: ubuntu-latest
-    environment: stage  # set required reviewers in Settings → Environments
-    steps:
-      - uses: actions/checkout@v4
-      - uses: hashicorp/setup-terraform@v3
-      - uses: aws-actions/configure-aws-credentials@v5
-        with:
-          role-to-assume: arn:aws:iam::151973317693:role/gha-deploy-stage
-          aws-region: us-east-2
-      - name: Terraform Init/Apply (STAGE)
-        working-directory: infra/envs/stage
-        run: |
-          terraform init
-          terraform apply -auto-approve
-
-  deploy-prod:
-    name: Deploy PROD
-    needs: deploy-stage
-    runs-on: ubuntu-latest
-    environment: prod  # protect with manual approval / reviewers
-    steps:
-      - uses: actions/checkout@v4
-      - uses: hashicorp/setup-terraform@v3
-      - uses: aws-actions/configure-aws-credentials@v5
-        with:
-          role-to-assume: arn:aws:iam::151973317693:role/gha-deploy-prod
-          aws-region: us-east-2
-      - name: Terraform Init/Apply (PROD)
-        working-directory: infra/envs/prod
         run: |
           terraform init
           terraform apply -auto-approve
