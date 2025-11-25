@@ -16,6 +16,7 @@ This tool helps ML Engineers and Product Managers diagnose and understand bias i
 - [x] **Backend API** - FastAPI with SQLite, heuristic detection, statistical analysis, recommendations
 - [x] **Frontend Dashboard** - React+TypeScript with interactive visualizations and dual-mode display
 - [x] **Full Integration** - End-to-end tested and working prototype
+- [x] **Docker Setup** - Complete containerization with docker-compose for one-command deployment
 - [x] **Documentation** - Comprehensive README files for both backend and frontend
 
 ## 🏗️ Architecture
@@ -89,6 +90,47 @@ npm run dev
 ```
 
 Frontend will be available at http://localhost:5173
+
+### 3. Docker Quick Start (Recommended)
+
+The easiest way to run the entire application:
+
+```bash
+# Make sure Docker and Docker Compose are installed
+docker --version
+docker-compose --version
+
+# Build and start all services (backend + frontend + database)
+docker-compose up
+
+# Or run in detached mode
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop all services
+docker-compose down
+
+# Stop and remove volumes (clears database)
+docker-compose down -v
+```
+
+Services will be available at:
+- **Frontend**: http://localhost
+- **Backend API**: http://localhost:8000
+- **API Docs**: http://localhost:8000/docs
+
+#### Docker Configuration
+
+The docker-compose setup includes:
+- **Backend**: Python FastAPI service with SQLite database
+- **Frontend**: Nginx serving production React build
+- **Persistent Storage**: Database persisted in Docker volume
+- **Health Checks**: Automatic service health monitoring
+- **Auto-restart**: Services restart automatically on failure
+
+No manual setup required - everything runs with one command!
 
 ## 📊 Features
 
@@ -207,6 +249,8 @@ ThinkingTest/
 │   │   ├── database.py        # Database setup
 │   │   └── main.py            # FastAPI application
 │   ├── requirements.txt
+│   ├── Dockerfile             # Backend container config
+│   ├── .dockerignore
 │   ├── .env.example
 │   └── README.md
 │
@@ -229,9 +273,13 @@ ThinkingTest/
 │   │   └── App.tsx
 │   ├── package.json
 │   ├── tailwind.config.js
+│   ├── Dockerfile             # Frontend container config
+│   ├── nginx.conf             # Nginx configuration
+│   ├── .dockerignore
 │   ├── .env.example
 │   └── README.md
 │
+├── docker-compose.yml          # Multi-container orchestration
 └── README.md                   # This file
 ```
 
@@ -279,7 +327,7 @@ The current implementation is a fully functional MVP prototype. Production deplo
 - Advanced filtering and search
 
 **Infrastructure**:
-- Docker containerization
+- ✅ Docker containerization (implemented)
 - Kubernetes deployment
 - CI/CD pipeline
 - Monitoring and logging (ELK stack, Prometheus)
