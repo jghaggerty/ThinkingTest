@@ -1,162 +1,309 @@
-# AI Bias Psychologist
+# AI Bias & Heuristics Diagnostic Tool
 
-A diagnostic tool that systematically detects, measures, and tracks cognitive biases in Large Language Models (LLMs) using structured behavioral probes inspired by Kahneman's research in judgment and decision-making.
+A comprehensive full-stack diagnostic dashboard for analyzing cognitive heuristics in AI systems, tracking bias patterns over time, and providing actionable remediation guidance for both technical and non-technical users.
 
-## Project Status: Planning Phase ✅
+## 🎯 Overview
+
+This tool helps ML Engineers and Product Managers diagnose and understand bias in AI systems through:
+- **Heuristic Analysis**: Detects 5 cognitive biases (anchoring, loss aversion, sunk cost, confirmation bias, availability heuristic)
+- **Longitudinal Tracking**: Monitors bias trends over time with statistical baselines
+- **Dual-Mode Reporting**: Provides both technical metrics and plain-language recommendations
+- **Interactive Dashboard**: Professional web interface with data visualizations
+
+## ✅ Project Status: Fully Implemented MVP
 
 ### Completed
-- [x] **Product Requirements Document (PRD)** - Comprehensive v0.1 specification
-- [x] **Task Breakdown** - 66 detailed implementation tasks across 7 major categories
-- [x] **Architecture Planning** - Python-based system with FastAPI, real-time dashboard, and multi-LLM support
+- [x] **Backend API** - FastAPI with SQLite, heuristic detection, statistical analysis, recommendations
+- [x] **Frontend Dashboard** - React+TypeScript with interactive visualizations and dual-mode display
+- [x] **Full Integration** - End-to-end tested and working prototype
+- [x] **Documentation** - Comprehensive README files for both backend and frontend
 
-### Current Phase
-**Planning & Architecture** - Ready to begin implementation
+## 🏗️ Architecture
 
-## Overview
+### Backend (Python + FastAPI)
+- RESTful API with auto-generated Swagger documentation
+- SQLite database for evaluation storage
+- Rule-based heuristic detection simulation
+- Statistical analysis and baseline calculations
+- Recommendation generation engine with priority ranking
 
-The AI Bias Psychologist addresses the critical need to understand and quantify how AI systems exhibit human-like cognitive biases, which can lead to systematic errors in reasoning, decision-making, and output generation.
+**Location**: `/backend`
+**Tech Stack**: FastAPI, SQLAlchemy, Pydantic, NumPy, Pandas
 
-### Key Features (v0.1)
-- **10 Core Bias Types**: Prospect Theory, Anchoring, Availability, Framing, Sunk Cost, Optimism, Confirmation, Base-Rate Neglect, Conjunction Fallacy, Overconfidence
-- **Multi-LLM Support**: OpenAI (GPT-4/3.5), Anthropic (Claude-3), Local models (Llama 3, Mistral)
-- **Real-time Dashboard**: Live bias monitoring with trend analysis and sparkline visualizations
-- **Statistical Analysis**: Normalized scoring, effect sizes, calibration error, contradiction detection
-- **Multi-modal Responses**: Both multiple-choice and free-text analysis with sentiment scoring
+[Backend Documentation →](./backend/README.md)
 
-## Target Audience
-- AI researchers
-- Compliance teams  
-- Product leaders
-- Regulators
+### Frontend (React + TypeScript)
+- Modern single-page application with React Router
+- Responsive dashboard with multiple views
+- Interactive charts using Recharts
+- Type-safe API integration with Axios
+- Export functionality for evaluation results
 
-## Technical Stack
-- **Backend**: Python, FastAPI, Typer CLI, Pydantic
-- **Analytics**: Pandas, NumPy, SciPy for statistical analysis
-- **Storage**: SQLite, JSONL logging
-- **Frontend**: HTML/CSS/JS with real-time updates
-- **LLM Integration**: OpenAI API, Anthropic API, Ollama
+**Location**: `/frontend`
+**Tech Stack**: React 18, TypeScript, Vite, TailwindCSS, Recharts, Lucide Icons
 
-## Project Structure
-```
-src/ai_bias_psych/
-├── probes/          # 10 bias probe implementations
-├── llm/            # LLM client integrations
-├── analytics/      # Scoring and statistical analysis
-├── storage/        # Data management and persistence
-├── api/           # FastAPI routes and endpoints
-└── web/           # Frontend dashboard
-```
+[Frontend Documentation →](./frontend/README.md)
 
-## Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
-- Python 3.9+
-- OpenAI API key (optional)
-- Anthropic API key (optional)
-- Ollama (for local models)
-- AWS CLI v2 (for infrastructure deployment)
-- Terraform (for infrastructure management)
+- Python 3.8+ with pip
+- Node.js 18+ with npm
 
-### Installation
+### 1. Start the Backend
+
 ```bash
-# Clone the repository
-git clone <repository-url>
-cd ai-bias-psychologist
+# Navigate to backend
+cd backend
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Set up environment variables
-cp .env.example .env
-# Edit .env with your API keys
+# Initialize database and seed sample data
+python -m app.utils.test_data_generator
 
-# Initialize database
-python scripts/setup_db.py
+# Start the API server
+uvicorn app.main:app --reload --port 8000
 ```
 
-### Usage
-```bash
-# Run full bias test battery
-python -m ai_bias_psych.cli run-battery --model gpt-4
+Backend will be available at:
+- **API**: http://localhost:8000
+- **Interactive Docs**: http://localhost:8000/docs
+- **ReDoc**: http://localhost:8000/redoc
 
-# Run specific bias probe
-python -m ai_bias_psych.cli run-probe --bias anchoring --model claude-3
-
-# Start dashboard
-python -m ai_bias_psych.main
-```
-
-## Local Authentication (AWS SSO)
-
-This project uses AWS SSO (IAM Identity Center) for secure authentication without static access keys.
-
-### Prerequisites
-- AWS CLI v2 installed
-- Access to your organization's AWS SSO portal
-
-### Setup AWS SSO Profile
-
-1. **Configure SSO profile** (run once):
-   ```bash
-   aws configure sso
-   ```
-   
-   When prompted, provide:
-   - SSO start URL: `https://your-org.awsapps.com/start`
-   - SSO region: `us-east-2`
-   - Default region: `us-east-2`
-   - Profile name: `dev-sso` (or your preferred name)
-
-2. **Login to SSO** (required each session):
-   ```bash
-   aws sso login --profile dev-sso
-   ```
-
-3. **Set environment variables** before running Terraform:
-
-   **Windows PowerShell:**
-   ```powershell
-   $env:AWS_PROFILE = "dev-sso"
-   $env:AWS_DEFAULT_REGION = "us-east-2"
-   ```
-
-   **macOS/Linux:**
-   ```bash
-   export AWS_PROFILE=dev-sso
-   export AWS_DEFAULT_REGION=us-east-2
-   ```
-
-### Convenience Scripts
-
-Use the provided helper scripts for easier authentication:
-
-**Windows PowerShell:**
-```powershell
-.\scripts\sso-login.ps1 -Profile "dev-sso" -Region "us-east-2"
-```
-
-**macOS/Linux:**
-```bash
-./scripts/sso-login.sh dev-sso us-east-2
-```
-
-### Infrastructure Deployment
-
-After authentication, deploy infrastructure:
+### 2. Start the Frontend
 
 ```bash
-cd infra/envs/dev
-terraform init
-terraform plan
-terraform apply
+# Navigate to frontend (new terminal)
+cd frontend
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
 ```
 
-## Documentation
-- [Product Requirements Document](tasks/prd-ai-bias-psychologist-v01.md)
-- [Implementation Tasks](tasks/tasks-prd-ai-bias-psychologist-v01.md)
+Frontend will be available at http://localhost:5173
 
-## Contributing
-This project is in active development. See the task list for current implementation priorities.
+## 📊 Features
 
-## License
-[To be determined]
+### Dashboard View
+- List all evaluations with status and zone classification (green/yellow/red)
+- Quick overview of scores and heuristics tested
+- Click-through to detailed analysis
+
+### Create Evaluation
+- Configure AI system name
+- Select heuristic types to test (1-5 options available)
+- Set iteration count (10-100 for statistical reliability)
+- Automatic execution after creation
+
+### Evaluation Detail
+
+#### Overview Tab
+- Overall score and zone status visualization
+- Bar chart showing severity scores by heuristic
+- Summary of findings with severity indicators
+- Configuration details and metadata
+
+#### Heuristics Tab
+- Detailed breakdown of each heuristic finding
+- Severity scoring (0-100 scale)
+- Confidence levels (0-1 scale)
+- Pattern analysis descriptions
+- Example instances from testing
+- Detection rate statistics
+
+#### Recommendations Tab
+- Prioritized mitigation strategies (ranked 1-10)
+- **Dual-mode display**: Toggle between technical and simplified descriptions
+  - **Technical**: Implementation details for engineers
+  - **Simplified**: Plain language for product managers
+- Impact estimates (low/medium/high)
+- Implementation difficulty ratings (easy/moderate/complex)
+- Actionable next steps
+
+### Export Functionality
+- Download evaluation results as JSON
+- Includes findings, recommendations, and metadata
+- Suitable for sharing and reporting
+
+## 📖 API Documentation
+
+The backend provides a RESTful API with comprehensive endpoints:
+
+### Evaluations
+- `POST /api/evaluations` - Create new evaluation
+- `GET /api/evaluations` - List all evaluations (paginated)
+- `GET /api/evaluations/{id}` - Get evaluation details
+- `POST /api/evaluations/{id}/execute` - Run heuristic analysis
+- `DELETE /api/evaluations/{id}` - Delete evaluation
+
+### Heuristics
+- `GET /api/evaluations/{id}/heuristics` - Get all findings
+- `GET /api/evaluations/{id}/heuristics/{type}` - Get specific finding
+
+### Recommendations
+- `GET /api/evaluations/{id}/recommendations?mode=both` - Get recommendations
+
+### Baselines
+- `POST /api/baselines` - Create statistical baseline
+- `GET /api/baselines/{id}` - Get baseline details
+- `GET /api/baselines/evaluations/{id}/trends` - Get longitudinal trends
+
+Full interactive documentation: http://localhost:8000/docs
+
+## 🧪 How It Works
+
+### Heuristic Detection (Simulated)
+
+The MVP uses rule-based simulation to demonstrate bias detection patterns:
+
+1. **Anchoring Bias**: Tests response variance with different initial values (threshold: 30%)
+2. **Loss Aversion**: Compares sensitivity to losses vs. gains (threshold: 2x ratio)
+3. **Sunk Cost Fallacy**: Evaluates influence of prior investment on decisions (threshold: 50%)
+4. **Confirmation Bias**: Measures dismissal of contradictory evidence (threshold: 60%)
+5. **Availability Heuristic**: Checks probability estimation bias from recent examples (threshold: 40%)
+
+### Statistical Analysis
+
+- **Zone Classification**:
+  - **Green Zone**: score ≤ mean + (0.5 × std_dev)
+  - **Yellow Zone**: mean + (0.5 × std_dev) < score ≤ mean + (1.5 × std_dev)
+  - **Red Zone**: score > mean + (1.5 × std_dev)
+
+- **Overall Score**: Weighted average of individual severity scores, with higher weights for worse findings
+
+- **Confidence Level**: `proportion × (1 - 1/√iterations)` capped at 99%
+
+### Recommendation Prioritization
+
+```
+priority_score = (severity_score × 0.6) + (confidence × 30) + (base_priority × 0.1)
+```
+
+Top 7 recommendations returned, ranked by priority descending.
+
+## 📁 Project Structure
+
+```
+ThinkingTest/
+├── backend/                    # FastAPI backend
+│   ├── app/
+│   │   ├── models/            # SQLAlchemy ORM models
+│   │   ├── schemas/           # Pydantic validation schemas
+│   │   ├── routers/           # API endpoint handlers
+│   │   ├── services/          # Business logic
+│   │   │   ├── heuristic_detector.py
+│   │   │   ├── statistical_analyzer.py
+│   │   │   └── recommendation_generator.py
+│   │   ├── utils/             # Utilities and test data
+│   │   ├── config.py          # Settings management
+│   │   ├── database.py        # Database setup
+│   │   └── main.py            # FastAPI application
+│   ├── requirements.txt
+│   ├── .env.example
+│   └── README.md
+│
+├── frontend/                   # React frontend
+│   ├── src/
+│   │   ├── components/        # Reusable UI components
+│   │   │   ├── Layout.tsx
+│   │   │   ├── Card.tsx
+│   │   │   ├── OverviewTab.tsx
+│   │   │   ├── HeuristicsTab.tsx
+│   │   │   └── RecommendationsTab.tsx
+│   │   ├── pages/             # Page components
+│   │   │   ├── Dashboard.tsx
+│   │   │   ├── CreateEvaluation.tsx
+│   │   │   └── EvaluationDetail.tsx
+│   │   ├── services/          # API client
+│   │   │   └── api.ts
+│   │   ├── types/             # TypeScript definitions
+│   │   ├── utils/             # Constants and formatters
+│   │   └── App.tsx
+│   ├── package.json
+│   ├── tailwind.config.js
+│   ├── .env.example
+│   └── README.md
+│
+└── README.md                   # This file
+```
+
+## 🎯 Use Cases
+
+### For ML Engineers
+- Debug black-box AI behavior through systematic bias testing
+- Establish statistical baselines for non-deterministic systems
+- Track behavioral drift in production models
+- Generate technical documentation for model cards
+
+### For Product Managers
+- Understand bias risks in plain language
+- Make go/no-go decisions with clear metrics
+- Respond to compliance/audit requests
+- Prioritize mitigation efforts by impact and feasibility
+
+### For Compliance Officers
+- Generate audit-ready reports (dual-mode: technical + executive summary)
+- Track remediation progress over time
+- Demonstrate due diligence in AI governance
+- Document risk mitigation strategies with clear action items
+
+## 🚧 Future Enhancements
+
+The current implementation is a fully functional MVP prototype. Production deployment could add:
+
+**Backend**:
+- Live API integration with actual AI systems (OpenAI, Anthropic, etc.)
+- Real ML models for bias detection (not rule-based simulation)
+- PostgreSQL database with migrations
+- Redis caching layer
+- Background job processing (Celery/RQ)
+- JWT authentication and authorization
+- Multi-tenancy support
+- Comprehensive test coverage (pytest)
+
+**Frontend**:
+- WebSocket support for real-time progress updates
+- PDF report generation
+- Comparison view for multiple evaluations
+- Custom baseline configuration UI
+- Dark mode support
+- Mobile-responsive design
+- Advanced filtering and search
+
+**Infrastructure**:
+- Docker containerization
+- Kubernetes deployment
+- CI/CD pipeline
+- Monitoring and logging (ELK stack, Prometheus)
+- Horizontal scaling infrastructure
+- CDN for static assets
+
+## 🔧 Development
+
+See individual README files for detailed development instructions:
+- [Backend Development Guide](./backend/README.md)
+- [Frontend Development Guide](./frontend/README.md)
+
+## 📝 License
+
+MIT License
+
+## 🤝 Contributing
+
+This is a prototype project demonstrating the architecture and capabilities of an AI bias diagnostic tool. For production deployment or collaboration, please contact the development team.
+
+## 📮 Support
+
+For issues and questions, please open an issue on the GitHub repository.
+
+---
+
+**Built for responsible AI development** 🎯
