@@ -1,4 +1,3 @@
-import { HeuristicFinding } from '@/types/bias';
 import {
   Dialog,
   DialogContent,
@@ -9,6 +8,21 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
+
+type HeuristicType = 'anchoring' | 'loss_aversion' | 'confirmation' | 'sunk_cost' | 'confirmation_bias' | 'availability_heuristic';
+type SeverityLevel = 'low' | 'medium' | 'high' | 'critical';
+
+interface HeuristicFinding {
+  id: string;
+  type: HeuristicType;
+  name: string;
+  severity: SeverityLevel;
+  confidence: number;
+  description: string;
+  examples: string[];
+  impact: string;
+  detectedAt: Date;
+}
 
 interface FindingDetailsDialogProps {
   finding: HeuristicFinding | null;

@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --force",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -52,6 +52,7 @@
     "react-day-picker": "^8.10.1",
     "react-dom": "^19.2.0",
     "react-hook-form": "^7.61.1",
+    "react-is": "^19.2.0",
     "react-resizable-panels": "^2.1.9",
     "react-router-dom": "^7.9.6",
     "recharts": "^3.5.0",

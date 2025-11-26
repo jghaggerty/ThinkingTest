@@ -1,9 +1,23 @@
-import { HeuristicFinding } from '@/types/bias';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { AlertTriangle, TrendingUp, Brain, DollarSign, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+
+type HeuristicType = 'anchoring' | 'loss_aversion' | 'confirmation' | 'sunk_cost' | 'confirmation_bias' | 'availability_heuristic';
+type SeverityLevel = 'low' | 'medium' | 'high' | 'critical';
+
+interface HeuristicFinding {
+  id: string;
+  type: HeuristicType;
+  name: string;
+  severity: SeverityLevel;
+  confidence: number;
+  description: string;
+  examples: string[];
+  impact: string;
+  detectedAt: Date;
+}
 
 interface HeuristicCardProps {
   finding: HeuristicFinding;

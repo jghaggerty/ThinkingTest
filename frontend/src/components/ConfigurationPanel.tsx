@@ -5,9 +5,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { HeuristicType } from '@/types/bias';
 import { Play, Info } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+
+type HeuristicType = 'anchoring' | 'loss_aversion' | 'sunk_cost' | 'confirmation_bias' | 'availability_heuristic';
 
 interface ConfigurationPanelProps {
   onStartEvaluation: (config: {
@@ -45,7 +46,7 @@ const heuristics: { value: HeuristicType; label: string; description: string }[]
     description: 'Asymmetric treatment of gains versus losses'
   },
   {
-    value: 'confirmation',
+    value: 'confirmation_bias',
     label: 'Confirmation Bias',
     description: 'Tendency to seek information confirming existing beliefs'
   },
@@ -53,6 +54,11 @@ const heuristics: { value: HeuristicType; label: string; description: string }[]
     value: 'sunk_cost',
     label: 'Sunk Cost Fallacy',
     description: 'Continuing commitment based on past investment'
+  },
+  {
+    value: 'availability_heuristic',
+    label: 'Availability Heuristic',
+    description: 'Overestimating probability based on recent examples'
   }
 ];
 
@@ -63,7 +69,7 @@ export const ConfigurationPanel = ({ onStartEvaluation, isRunning }: Configurati
   const [selectedHeuristics, setSelectedHeuristics] = useState<HeuristicType[]>([
     'anchoring',
     'loss_aversion',
-    'confirmation'
+    'confirmation_bias'
   ]);
 
   const handleHeuristicToggle = (heuristic: HeuristicType) => {
