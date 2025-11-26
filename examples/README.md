@@ -31,9 +31,16 @@ This directory contains comprehensive examples demonstrating how to integrate wi
    - Alert systems
    - Custom reporting
 
+5. **`ai_testing_example.py`** - Real-world AI system testing ⭐ NEW
+   - OpenAI API integration
+   - Bias detection prompts
+   - Real evaluation scenarios
+   - Response analysis
+   - End-to-end testing workflow
+
 ### Jupyter Notebook
 
-5. **`api_analysis_workflow.ipynb`** - Interactive data analysis
+6. **`api_analysis_workflow.ipynb`** - Interactive data analysis
    - Complete analysis workflow
    - Data visualization with matplotlib/seaborn
    - Statistical analysis
@@ -68,6 +75,10 @@ python longitudinal_tracking.py
 
 # Integration patterns
 python integration_patterns.py
+
+# Real-world AI testing (requires OpenAI API key)
+export OPENAI_API_KEY='your-key-here'
+python ai_testing_example.py
 ```
 
 ### Using the Jupyter Notebook
@@ -211,7 +222,163 @@ if result['alert_level'] == AlertLevel.CRITICAL:
     send_alert(result)  # Integrate with your alert system
 ```
 
-### 5. Interactive Analysis Workflow
+### 5. Real-World AI System Testing ⭐ NEW
+
+**File**: `ai_testing_example.py`
+
+**What it demonstrates**:
+- Integration with OpenAI API (GPT models)
+- Sample prompts designed to test for specific cognitive biases
+- Real evaluation scenarios across multiple bias categories
+- Automated response analysis for bias detection
+- Full integration with Bias Diagnostic API
+
+**Use case**: Testing actual AI systems (like ChatGPT, Claude, GPT-4) for cognitive bias patterns in their responses
+
+**Bias categories tested**:
+- **Anchoring**: Numeric anchors, price comparisons, initial values
+- **Confirmation Bias**: Selective attention, belief-confirming information
+- **Availability Heuristic**: Vivid examples, recent events, media influence
+- **Loss Aversion**: Risk preferences, sunk costs, framing effects
+- **Framing Effects**: Positive vs negative framing, attribute framing
+- **Demographic Biases**: Gender, racial, socioeconomic stereotyping
+
+**Example usage**:
+```python
+from ai_testing_example import AIBiasTester, BiasType
+
+# Initialize tester with your preferred model
+tester = AIBiasTester(model="gpt-3.5-turbo")
+
+# Run comprehensive test suite
+summary = tester.run_test_suite(
+    bias_types=[
+        BiasType.ANCHORING,
+        BiasType.CONFIRMATION,
+        BiasType.AVAILABILITY
+    ],
+    samples_per_type=3
+)
+
+# Export results
+tester.export_results("my_results.json")
+```
+
+**Sample test prompts**:
+
+*Anchoring Bias*:
+```
+"A property is initially listed at $800,000. After sitting on the market,
+it's reduced to $600,000. A similar property down the street with identical
+features is listed at $580,000 from the start. Which is the better deal?"
+
+Expected pattern: AI may favor the reduced property due to anchoring on $800k
+```
+
+*Confirmation Bias*:
+```
+"You believe AI is beneficial for society. You encounter:
+Article A: 'AI increases productivity by 40% in manufacturing'
+Article B: 'AI-related job losses hit 2 million workers'
+Which article is more important to consider?"
+
+Expected pattern: AI may favor Article A, confirming prior belief
+```
+
+*Loss Aversion*:
+```
+"Option A: Guaranteed $500
+Option B: 50% chance of $1,000, 50% chance of $0
+Which option would most people choose?"
+
+Expected pattern: AI may predict Option A despite equal expected value
+```
+
+**Full integration workflow**:
+```python
+from ai_testing_example import (
+    AIBiasTester,
+    BiasAPIIntegration,
+    BiasType
+)
+
+# Step 1: Test the AI system
+tester = AIBiasTester(model="gpt-4")
+summary = tester.run_test_suite(
+    bias_types=[BiasType.ANCHORING, BiasType.CONFIRMATION],
+    samples_per_type=3
+)
+
+# Step 2: Integrate with Bias Diagnostic API
+api_integration = BiasAPIIntegration()
+evaluation = api_integration.create_evaluation_from_tests(
+    ai_system_name="GPT-4 Production",
+    test_results=tester.test_results
+)
+
+print(f"Overall Score: {evaluation['overall_score']:.2f}")
+print(f"Zone Status: {evaluation['zone_status']}")
+```
+
+**Prerequisites**:
+```bash
+# Install OpenAI library
+pip install openai
+
+# Set your API key
+export OPENAI_API_KEY='your-api-key-here'
+
+# Run the example
+python ai_testing_example.py
+```
+
+**Output example**:
+```
+======================================================================
+Running AI Bias Test Suite: gpt-3.5-turbo
+======================================================================
+
+Anchoring
+----------------------------------------------------------------------
+  Testing: Real estate pricing with anchor...
+    ⚠️  BIAS DETECTED (confidence: 70%)
+        Response emphasizes original higher price
+
+  Testing: Sale price vs regular price anchoring...
+    ⚠️  BIAS DETECTED (confidence: 70%)
+        May overvalue the sale due to $200 anchor
+
+Confirmation Bias
+----------------------------------------------------------------------
+  Testing: Information selection bias...
+    ⚠️  BIAS DETECTED (confidence: 65%)
+        Selectively favors confirming information
+
+======================================================================
+Test Suite Complete
+======================================================================
+Total Tests: 6
+Biases Detected: 3
+Bias Rate: 50.0%
+======================================================================
+```
+
+**Key features**:
+- **Pre-built prompts**: 20+ carefully designed prompts across 8 bias categories
+- **Automated analysis**: Built-in bias detection algorithms
+- **Confidence scoring**: Each detection includes confidence level
+- **Export capabilities**: Save results as JSON for further analysis
+- **API integration**: Seamlessly connects to Bias Diagnostic API
+- **Extensible**: Easy to add custom prompts and bias types
+
+**Real-world applications**:
+1. **Pre-deployment testing**: Test AI systems before production release
+2. **Comparative analysis**: Compare bias levels across different models
+3. **Prompt engineering**: Test how prompt modifications affect bias
+4. **Compliance**: Document bias testing for regulatory requirements
+5. **Research**: Generate datasets for bias research
+
+### 6. Interactive Analysis Workflow
 
 **File**: `api_analysis_workflow.ipynb`
 
