@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 from typing import List
 from datetime import datetime
@@ -10,8 +11,10 @@ from app.schemas.evaluation import (
     EvaluationResponse,
     EvaluationList,
 )
+from app.schemas.report import ExecutiveSummary, JSONReportResponse
 from app.services.heuristic_detector import HeuristicDetector
 from app.services.statistical_analyzer import StatisticalAnalyzer
+from app.services.report_generator import ReportGenerator
 from app.config import settings
 
 router = APIRouter(prefix="/api/evaluations", tags=["evaluations"])
@@ -185,6 +188,74 @@ def execute_evaluation(evaluation_id: str, db: Session = Depends(get_db)):
                     "message": f"Evaluation execution failed: {str(e)}",
                 }
             },
+        )
+
+
+@router.get("/{evaluation_id}/reports")
+def generate_report(
+    evaluation_id: str,
+    format: str = Query("json", pattern="^(json|pdf|summary)$"),
+    db: Session = Depends(get_db)
+):
+    """Generate evaluation report in specified format.
+
+    Args:
+        evaluation_id: The evaluation ID
+        format: Report format - 'json' for full data export, 'pdf' for PDF report, 'summary' for executive summary
+
+    Returns:
+        Report in requested format
+    """
+    # Fetch evaluation
+    evaluation = db.query(Evaluation).filter(Evaluation.id == evaluation_id).first()
+
+    if not evaluation:
+        raise HTTPException(
+            status_code=404,
+            detail={
+                "error": {
+                    "code": "NOT_FOUND",
+                    "message": f"Evaluation with id {evaluation_id} not found",
+                }
+            },
+        )
+
+    # Check if evaluation is completed
+    if evaluation.status != EvaluationStatus.COMPLETED:
+        raise HTTPException(
+            status_code=400,
+            detail={
+                "error": {
+                    "code": "EVALUATION_NOT_COMPLETED",
+                    "message": "Cannot generate report for incomplete evaluation",
+                    "details": {
+                        "current_status": evaluation.status.value
+                    }
+                }
+            },
+        )
+
+    # Fetch findings
+    findings = db.query(HeuristicFinding).filter(
+        HeuristicFinding.evaluation_id == evaluation_id
+    ).all()
+
+    # Initialize report generator
+    report_gen = ReportGenerator(evaluation, findings)
+
+    # Generate report based on format
+    if format == "json":
+        return report_gen.generate_json_report()
+    elif format == "summary":
+        return report_gen.generate_executive_summary()
+    elif format == "pdf":
+        pdf_buffer = report_gen.generate_pdf_report()
+        return StreamingResponse(
+            pdf_buffer,
+            media_type="application/pdf",
+            headers={
+                "Content-Disposition": f"attachment; filename=evaluation_{evaluation_id}_report.pdf"
+            }
         )
 
 
